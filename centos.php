@@ -26,14 +26,14 @@
 // Global definition of latest, valult, and development releases:
 include 'config.php';
 
-$release = $_GET['release'];
+$release = $_GET['release'][0];
 // Read nsrelease from URL path for ns6 (i.e. 6.9/centos?...)
 $nsrelease = str_replace('/', '', $_SERVER['PATH_INFO']);
 $arch = $_GET['arch'];
 $repo = $_GET['repo'];
 
-$valid_release = $release == '6';
-$valid_nsrelease = in_array($nsrelease, array_merge($stable_releases, $development_releases, $vault_releases)) && ($nsrelease[0] == $release[0]);
+$valid_release = in_array($release, array_keys($stable_releases));
+$valid_nsrelease = in_array($nsrelease, array_merge($stable_releases, $development_releases, $vault_releases)) && ($nsrelease[0] >= $release[0]);
 $valid_arch = in_array($arch, array('x86_64'));
 $valid_repo = in_array($repo, array('os', 'updates'));
 
